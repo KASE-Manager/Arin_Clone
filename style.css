@@ -363,7 +363,7 @@ li {
     text-align: center;
     padding: 0 10%;
     background: var(--color-bg);
-    overflow: hidden;
+    overflow: clip;
 }
 
 .mission-text {

@@ -379,4 +379,9 @@ document.addEventListener('DOMContentLoaded', () => {
     setupCardStacking();
     initEntranceAnimation();
     updateHeader(0); // initial header state
+
+    // Refresh ScrollTrigger after custom fonts load to fix measurement errors
+    document.fonts.ready.then(() => {
+        ScrollTrigger.refresh();
+    });
 });
