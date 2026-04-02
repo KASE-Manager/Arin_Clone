@@ -191,7 +191,8 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sectionEl || revealedSections.has(index)) return;
 
         // Custom reveal for stacked cards to ensure they animate when they come into view
-        const revealEls = sectionEl.querySelectorAll('.hl-reveal');
+        // Exclude mission-text as it has its own scroll-driven scale animation
+        const revealEls = sectionEl.querySelectorAll('.hl-reveal:not(.mission-text)');
         if (revealEls.length > 0) {
             revealedSections.add(index);
             gsap.to(revealEls, {
@@ -244,21 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
         const startScale = 50;
 
         // Calculate transform-origin so the 's' letter is the zoom center
+        // Uses offsetLeft/offsetTop which are NOT affected by CSS transforms,
+        // so we never need to temporarily reset scale (which broke ScrollTrigger measurements).
         const updateOrigin = () => {
-            // Temporarily reset scale to measure real positions
-            const currentScale = gsap.getProperty(missionText, "scale");
-            gsap.set(missionText, { scale: 1 });
-            const textRect = missionText.getBoundingClientRect();
-            const letterRect = focusLetter.getBoundingClientRect();
-            const originX = ((letterRect.left + letterRect.width / 2) - textRect.left) / textRect.width * 100;
-            const originY = ((letterRect.top + letterRect.height / 2) - textRect.top) / textRect.height * 100;
-            gsap.set(missionText, { transformOrigin: `${originX}% ${originY}%`, scale: currentScale });
+            let x = 0, y = 0;
+            let el = focusLetter;
+            while (el && el !== missionText) {
+                x += el.offsetLeft;
+                y += el.offsetTop;
+                el = el.offsetParent;
+            }
+            x += focusLetter.offsetWidth / 2;
+            y += focusLetter.offsetHeight / 2;
+
+            const originX = (x / missionText.offsetWidth) * 100;
+            const originY = (y / missionText.offsetHeight) * 100;
+            gsap.set(missionText, { transformOrigin: `${originX}% ${originY}%` });
         };
 
         gsap.set(missionText, { scale: startScale, opacity: 1, y: 0 });
-        requestAnimationFrame(() => {
-            updateOrigin();
-        });
+        updateOrigin();
 
         ScrollTrigger.create({
             trigger: missionSection,
