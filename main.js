@@ -23,7 +23,6 @@ document.addEventListener('DOMContentLoaded', () => {
         '#section-doko',
         '#section-influencer',
         '#section-values',
-        '#section-contact'
     ];
     const sections = sectionSelectors.map(s => document.querySelector(s)).filter(Boolean);
 
@@ -71,11 +70,10 @@ document.addEventListener('DOMContentLoaded', () => {
         link.addEventListener('click', (e) => {
             e.preventDefault();
             const sectionIndex = parseInt(link.getAttribute('data-section'));
-            // Map the old data-section values (1, 4, 5) to new indices (2, 5, 6)
+            // Map data-section values to section indices
             let targetIndex = sectionIndex;
             if (sectionIndex === 1) targetIndex = 2; // Service
-            if (sectionIndex === 4) targetIndex = 5; // About
-            if (sectionIndex === 5) targetIndex = 6; // Contact (values-contact end)
+            if (sectionIndex === 4) targetIndex = 5; // About (Partners)
             
             goToSection(targetIndex);
         });
@@ -134,47 +132,61 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set(card1, { opacity: 1, pointerEvents: "auto" });
         gsap.set([card2, card3], { opacity: 0, pointerEvents: "none" });
 
-        // Hide ALL cards' internal elements below, including Card 1
-        const card1Visual = card1.querySelector('.service-visual');
-        const card1Content = card1.querySelector('.service-content');
-        const cardElements = [
-            card1Visual, card1Content,
-            card2.querySelector('.service-visual'), card2.querySelector('.service-content'),
-            card3.querySelector('.service-visual'), card3.querySelector('.service-content')
-        ];
-        gsap.set(cardElements, { y: 100, opacity: 0 });
-
-        // Card 1 Rising Entry: triggers when the services section enters the viewport
-        ScrollTrigger.create({
-            trigger: stackWrapper,
-            start: "top 80%",
-            once: true,
-            onEnter: () => {
-                gsap.to(card1Visual, { y: 0, opacity: 1, duration: 0.9, ease: "power2.out", delay: 0 });
-                gsap.to(card1Content, { y: 0, opacity: 1, duration: 0.9, ease: "power2.out", delay: 0.2 });
-            }
-        });
+        // Hide Card 2 & 3 grids, Card 1 starts visible
+        gsap.set(card1Grid, { y: 0, opacity: 1, scale: 1, filter: "none" });
+        gsap.set([card2Grid, card3Grid], { y: 100, opacity: 0 });
 
         // 2. Timeline Sequence
         masterTl
             // --- Transition 1: Card 1 (Out) -> Card 2 (Rising In) ---
             .to(card1Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 }, 0)
             .to(card2, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, 0.2)
-            .to(card2.querySelector('.service-visual'), { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0.3)
-            .to(card2.querySelector('.service-content'), { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0.5)
-            
+            .to(card2Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0.3)
+
             // Stay on Card 2
             .to({}, { duration: 0.5 })
 
             // --- Transition 2: Card 2 (Out) -> Card 3 (Rising In) ---
-            .to(card2.querySelector('.service-grid'), { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })
+            .to(card2Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })
             .to(card3, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, "-=0.8")
-            .to(card3.querySelector('.service-visual'), { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.7")
-            .to(card3.querySelector('.service-content'), { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.5")
+            .to(card3Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.7")
 
             // Final Stay on Card 3
             .to({}, { duration: 0.5 });
     };
+
+    // ─────────────────────────────────────────────
+    // Custom Cursor for Service Cards
+    // ─────────────────────────────────────────────
+    const cursorEl = document.createElement('div');
+    cursorEl.className = 'custom-cursor';
+    cursorEl.innerHTML = '<span class="cursor-arrow">→</span>';
+    document.body.appendChild(cursorEl);
+
+    let cursorX = 0, cursorY = 0, currentX = 0, currentY = 0;
+
+    document.addEventListener('mousemove', (e) => {
+        cursorX = e.clientX;
+        cursorY = e.clientY;
+    });
+
+    function animateCursor() {
+        currentX += (cursorX - currentX) * 0.15;
+        currentY += (cursorY - currentY) * 0.15;
+        cursorEl.style.left = currentX + 'px';
+        cursorEl.style.top = currentY + 'px';
+        requestAnimationFrame(animateCursor);
+    }
+    animateCursor();
+
+    document.querySelectorAll('.service-grid').forEach(card => {
+        card.addEventListener('mouseenter', () => {
+            cursorEl.classList.add('active');
+        });
+        card.addEventListener('mouseleave', () => {
+            cursorEl.classList.remove('active');
+        });
+    });
 
     // ─────────────────────────────────────────────
     // 6. Section Content Reveal (hl-reveal elements)
@@ -347,24 +359,6 @@ document.addEventListener('DOMContentLoaded', () => {
             goToSection(index);
         });
     });
-
-    // ─────────────────────────────────────────────
-    // Contact form submission logic
-    const contactForm = document.querySelector('.contact-form');
-    if (contactForm) {
-        contactForm.addEventListener('submit', (e) => {
-            e.preventDefault();
-            
-            const name = document.getElementById('contact-name').value;
-            const email = document.getElementById('contact-email').value;
-            const message = document.getElementById('contact-message').value;
-            
-            const subject = encodeURIComponent(`YOURKASE_[Contact] ${name}님으로부터의 문의`);
-            const body = encodeURIComponent(`성명: ${name}\n이메일: ${email}\n\n문의내용:\n${message}`);
-            
-            window.location.href = `mailto:ruby@yourkase.com?subject=${subject}&body=${body}`;
-        });
-    }
 
     // ─────────────────────────────────────────────
     // Init
