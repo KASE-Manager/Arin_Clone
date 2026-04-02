@@ -368,6 +368,7 @@ li {
 
 .mission-text {
     max-width: 900px;
+    width: 100%;
     will-change: transform;
 }
 

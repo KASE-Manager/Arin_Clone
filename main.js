@@ -241,36 +241,36 @@ document.addEventListener('DOMContentLoaded', () => {
     const missionText = document.querySelector('.mission-text');
     const focusLetter = document.querySelector('.mission-focus-letter');
     if (missionSection && missionText && focusLetter) {
+        const startScale = 50;
+
         // Calculate transform-origin so the 's' letter is the zoom center
         const updateOrigin = () => {
+            // Temporarily reset scale to measure real positions
+            const currentScale = gsap.getProperty(missionText, "scale");
+            gsap.set(missionText, { scale: 1 });
             const textRect = missionText.getBoundingClientRect();
             const letterRect = focusLetter.getBoundingClientRect();
             const originX = ((letterRect.left + letterRect.width / 2) - textRect.left) / textRect.width * 100;
             const originY = ((letterRect.top + letterRect.height / 2) - textRect.top) / textRect.height * 100;
-            gsap.set(missionText, { transformOrigin: `${originX}% ${originY}%` });
+            gsap.set(missionText, { transformOrigin: `${originX}% ${originY}%`, scale: currentScale });
         };
 
-        // Set initial state: zoomed in so much that only the color of 's' fills the screen
-        gsap.set(missionText, { scale: 120, opacity: 1, y: 0 });
-        // Need a brief delay to get correct layout measurements
+        gsap.set(missionText, { scale: startScale, opacity: 1, y: 0 });
         requestAnimationFrame(() => {
             updateOrigin();
-        });
-
-        const missionTl = gsap.timeline();
-        missionTl.to(missionText, {
-            scale: 1,
-            ease: "power2.out",
         });
 
         ScrollTrigger.create({
             trigger: missionSection,
             start: "top top",
-            end: "+=250%",
-            scrub: 1,
+            end: "+=300%",
+            scrub: 0.5,
             pin: true,
             pinSpacing: true,
-            animation: missionTl,
+            animation: gsap.to(missionText, {
+                scale: 1,
+                ease: "none",
+            }),
             onRefresh: updateOrigin,
         });
     }
