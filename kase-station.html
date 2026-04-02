@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kase Station | YOURKASE</title>
+    <meta name="description" content="외국인 전용 글로벌 모바일 라운지, Kase Station의 상세 정보를 확인하세요.">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Inter:wght@300;400;500;700&display=swap"
+        rel="stylesheet">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Libraries -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+</head>
+
+<body class="detail-page-wrapper">
+    <div id="app">
+        <!-- Header -->
+        <header id="header" class="scrolled"> <!-- Force dark header on detail page -->
+            <div class="header-inner">
+                <h1 class="logo">
+                    <a href="index.html"><img src="YOURKASE LOGO.svg" alt="YOURKASE" class="logo-img" style="filter: brightness(0) invert(1);"></a>
+                </h1>
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="index.html#section-kase" class="nav-link-static">SERVICE</a></li>
+                        <li><a href="index.html#section-values" class="nav-link-static">ABOUT</a></li>
+                        <li><a href="index.html#section-contact" class="nav-link-static">CONTACT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <main>
+            <!-- Hero Section -->
+            <section class="detail-hero">
+                <div class="detail-hero-bg">
+                    <img src="KaseDetail.png" alt="Kase Station Hero" class="hl-image">
+                </div>
+                <div class="detail-hero-overlay"></div>
+                <div class="detail-hero-content">
+                    <div class="detail-hero-logo-wrap">
+                        <img src="Kase Station LOGO.svg" alt="Kase Station" class="detail-hero-logo">
+                    </div>
+                    <p class="detail-hero-subtitle">외국인 전용 글로벌 모바일 라운지.<br>한국 도착 첫 순간부터 편리한 정착을 돕는<br>유어케이스의 오프라인 공간입니다.</p>
+                </div>
+            </section>
+
+            <!-- Intro Section -->
+            <section class="detail-section">
+                <div class="detail-feature-card">
+                    <div class="feature-text">
+                        <h3 class="feature-card-title">다국어 고객 응대</h3>
+                        <p class="feature-card-desc">
+                            Whisper AI 기반 오프라인 통신 상담용<br>
+                            16개 국어 실시간 음성번역 솔루션 제공
+                        </p>
+                    </div>
+                    <div class="feature-image">
+                        <img src="Translate.png" alt="Whisper AI Translation" class="hl-image">
+                    </div>
+                </div>
+
+                <div class="detail-service-grid">
+                    <div class="detail-service-card">
+                        <span class="card-icon">🏠</span>
+                        <h4 class="card-title">Housing Solution</h4>
+                        <p class="card-desc">
+                            외국인의 조건에 맞는 안전하고 쾌적한 주거 공간을 매칭합니다. 신뢰할 수 있는 파트너십을 통해 계약부터 입주까지 전 과정을 지원합니다.
+                        </p>
+                    </div>
+                    <div class="detail-service-card">
+                        <span class="card-icon">📄</span>
+                        <h4 class="card-title">Admin Support</h4>
+                        <p class="card-desc">
+                            비자 연장, 거주 등록 등 복잡한 행정 절차를 정확하게 안내하고 대행을 지원합니다. 법적 가이드를 통해 안전한 체류를 돕습니다.
+                        </p>
+                    </div>
+                    <div class="detail-service-card">
+                        <span class="card-icon">💬</span>
+                        <h4 class="card-title">Life Consulting</h4>
+                        <p class="card-desc">
+                            은행 계좌 개설, 핸드폰 개통 등 실생활에 꼭 필요한 서비스들을 1:1 컨설팅을 통해 빠르고 편리하게 해결해 드립니다.
+                        </p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Vision Section -->
+            <section class="detail-section" style="background: var(--color-bg);">
+                <div class="detail-intro">
+                    <h3 class="detail-section-title" style="color: var(--color-text);">Our Mission</h3>
+                    <p class="detail-section-desc" style="color: var(--color-text-dim);">
+                        우리는 외국인이 한국에서 누려야 할 '당연한 권리'와 '특별한 경험' 사이의 접점을 디자인합니다. 
+                        Kase Station은 당신의 한국 생활이 설레는 시작이 될 수 있도록 곁에서 든든한 파트너가 될 것입니다.
+                    </p>
+                </div>
+            </section>
+
+            <!-- Call to Action -->
+            <section class="detail-section" style="text-align: center; background: var(--color-bg);">
+                <h3 class="detail-section-title" style="color: var(--color-text);">궁금한 점이 있으신가요?</h3>
+                <a href="index.html#section-contact" class="btn-view-more" style="margin-top: 20px;">지금 바로 문의하기 <span class="arrow">→</span></a>
+            </section>
+
+            <!-- Footer -->
+            <footer id="footer" style="background: var(--color-bg); border-top: 1px solid var(--color-border); padding-top: 100px;">
+                <div class="footer-main">
+                    <div class="footer-logo">
+                        <img src="YOURKASE LOGO.svg" alt="YOURKASE" class="footer-logo-img" style="filter: brightness(0) invert(1);">
+                    </div>
+                    <div class="footer-content">
+                        <h4 class="company-name" style="color: var(--color-text);">(주)유어케이스</h4>
+                        <div class="footer-info-row" style="color: var(--color-text-dim);">
+                            <span>서울시 서초구 서초대로 398 BNK빌딩 735호</span>
+                            <span class="sep">|</span>
+                            <span>대표자: 전은희</span>
+                        </div>
+                        <div class="footer-info-row" style="color: var(--color-text-dim);">
+                            <span>사업자등록번호: 255-88-03207</span>
+                            <span class="sep">|</span>
+                            <span>전화번호: 010-2371-9170</span>
+                        </div>
+                        <div class="footer-info-row" style="color: var(--color-text-dim);">
+                            <span>이메일: ruby@yourkase.com</span>
+                        </div>
+                        <div class="footer-legal-row" style="color: var(--color-text-dim); margin-top: 40px;">
+                            <span class="copyright">&copy; 2026 YOURKASE. All Rights Reserved.</span>
+                            <a href="#" style="color: var(--color-text-dim);">Privacy Policy</a>
+                            <a href="#" style="color: var(--color-text-dim);">Terms of Service</a>
+                        </div>
+                    </div>
+                </div>
+            </footer>
+        </main>
+    </div>
+
+    <!-- Script for Entrance Animations -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            gsap.registerPlugin(ScrollTrigger);
+
+            // Simple reveal animation
+            gsap.from('.detail-hero-content > *', {
+                opacity: 0,
+                y: 50,
+                duration: 1.2,
+                stagger: 0.3,
+                ease: 'power3.out'
+            });
+
+            gsap.from('.detail-service-card', {
+                scrollTrigger: {
+                    trigger: '.detail-service-grid',
+                    start: 'top 80%'
+                },
+                opacity: 0,
+                y: 40,
+                duration: 1,
+                stagger: 0.2,
+                ease: 'power3.out'
+            });
+        });
+    </script>
+</body>
+
+</html>
