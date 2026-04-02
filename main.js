@@ -244,27 +244,26 @@ document.addEventListener('DOMContentLoaded', () => {
     if (missionSection && missionText && focusLetter) {
         const startScale = 50;
 
-        // Calculate transform-origin so the 's' letter is the zoom center
-        // Uses offsetLeft/offsetTop which are NOT affected by CSS transforms,
-        // so we never need to temporarily reset scale (which broke ScrollTrigger measurements).
-        const updateOrigin = () => {
-            let x = 0, y = 0;
-            let el = focusLetter;
-            while (el && el !== missionText) {
-                x += el.offsetLeft;
-                y += el.offsetTop;
-                el = el.offsetParent;
-            }
-            x += focusLetter.offsetWidth / 2;
-            y += focusLetter.offsetHeight / 2;
-
-            const originX = (x / missionText.offsetWidth) * 100;
-            const originY = (y / missionText.offsetHeight) * 100;
-            gsap.set(missionText, { transformOrigin: `${originX}% ${originY}%` });
+        // Calculate transform-origin so the 's' letter is the zoom center.
+        // The ratio (letterCenter - textLeft) / textWidth is invariant under
+        // uniform scaling, so this works at ANY current scale without resetting it.
+        const calcOrigin = () => {
+            const tr = missionText.getBoundingClientRect();
+            const lr = focusLetter.getBoundingClientRect();
+            if (tr.width === 0 || tr.height === 0) return null;
+            const ox = ((lr.left + lr.width / 2) - tr.left) / tr.width * 100;
+            const oy = ((lr.top + lr.height / 2) - tr.top) / tr.height * 100;
+            return `${ox}% ${oy}%`;
         };
 
-        gsap.set(missionText, { scale: startScale, opacity: 1, y: 0 });
-        updateOrigin();
+        // Measure BEFORE applying scale (text is at natural scale 1, cleanest measurement)
+        const initialOrigin = calcOrigin() || '50% 50%';
+        gsap.set(missionText, {
+            transformOrigin: initialOrigin,
+            scale: startScale,
+            opacity: 1,
+            y: 0
+        });
 
         ScrollTrigger.create({
             trigger: missionSection,
@@ -273,11 +272,15 @@ document.addEventListener('DOMContentLoaded', () => {
             scrub: 0.5,
             pin: true,
             pinSpacing: true,
+            invalidateOnRefresh: true,
             animation: gsap.to(missionText, {
                 scale: 1,
                 ease: "none",
             }),
-            onRefresh: updateOrigin,
+            onRefresh: () => {
+                const origin = calcOrigin();
+                if (origin) gsap.set(missionText, { transformOrigin: origin });
+            },
         });
     }
 
