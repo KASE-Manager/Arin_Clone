@@ -227,7 +227,7 @@ li {
     height: 100vh;
     position: relative;
     overflow: hidden;
-    z-index: 1;
+    z-index: 0;
 }
 
 .hero-swiper {
@@ -394,6 +394,8 @@ li {
     align-items: center;
     justify-content: center;
     background: #ffffff;
+    position: relative;
+    z-index: 2;
     overflow: hidden;
 }
 

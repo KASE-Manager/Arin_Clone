@@ -100,6 +100,20 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // ─────────────────────────────────────────────
+    // Hero pin: stays fixed while keyword section scrolls over it
+    // ─────────────────────────────────────────────
+    const heroEl = document.querySelector('.hero');
+    if (heroEl) {
+        ScrollTrigger.create({
+            trigger: heroEl,
+            start: "top top",
+            end: "+=100%",
+            pin: true,
+            pinSpacing: false,
+        });
+    }
+
+    // ─────────────────────────────────────────────
     // 6. Toss-style Stacking Animation (ScrollTrigger)
     // ─────────────────────────────────────────────
     const setupCardStacking = () => {
@@ -274,9 +288,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         const kwTl = gsap.timeline();
         kwTl
-            // Empty space for 2/3 of section entry
-            .to({}, { duration: 1.5 })
-            // First word rises up from below
+            // First word rises up immediately
             .to(words[0], { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
             // Hold first word centered
             .to({}, { duration: 0.5 })
