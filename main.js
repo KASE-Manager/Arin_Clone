@@ -20,7 +20,6 @@ document.addEventListener('DOMContentLoaded', () => {
         '.hero',
         '#section-mission',
         '#section-kase',
-        '#section-doko',
         '#section-influencer',
         '#section-values',
     ];
@@ -73,7 +72,7 @@ document.addEventListener('DOMContentLoaded', () => {
             // Map data-section values to section indices
             let targetIndex = sectionIndex;
             if (sectionIndex === 1) targetIndex = 2; // Service
-            if (sectionIndex === 4) targetIndex = 5; // About (Partners)
+            if (sectionIndex === 4) targetIndex = 4; // About (Partners)
             
             goToSection(targetIndex);
         });
@@ -109,11 +108,10 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!stackWrapper || !pinnedContainer) return;
 
         const card1 = document.querySelector('#section-kase');
-        const card2 = document.querySelector('#section-doko');
         const card3 = document.querySelector('#section-influencer');
-        
+        if (!card1 || !card3) return;
+
         const card1Grid = card1.querySelector('.service-grid');
-        const card2Grid = card2.querySelector('.service-grid');
         const card3Grid = card3.querySelector('.service-grid');
 
         // Master Timeline with Pinning
@@ -121,19 +119,19 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: {
                 trigger: stackWrapper,
                 start: "top top",
-                end: "+=450%", // Stay pinned for 4.5x viewport height
+                end: "+=300%",
                 pin: true,
                 scrub: 1,
                 markers: false
             }
         });
 
-        // 1. Initial State: Ensure Card 1 is active, others are ready for rising
+        // 1. Initial State
         gsap.set(card1, { opacity: 1, pointerEvents: "auto" });
-        gsap.set([card2, card3], { opacity: 0, pointerEvents: "none" });
+        gsap.set(card3, { opacity: 0, pointerEvents: "none" });
 
         // All cards start hidden
-        gsap.set([card1Grid, card2Grid, card3Grid], { y: 100, opacity: 0 });
+        gsap.set([card1Grid, card3Grid], { y: 100, opacity: 0 });
 
         // 2. Timeline Sequence
         masterTl
@@ -143,16 +141,8 @@ document.addEventListener('DOMContentLoaded', () => {
             // Stay on Card 1
             .to({}, { duration: 1 })
 
-            // --- Transition 1: Card 1 (Out) -> Card 2 (Rising In) ---
+            // --- Transition: Card 1 (Out) -> Card 3 (Rising In) ---
             .to(card1Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })
-            .to(card2, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, "-=0.8")
-            .to(card2Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.7")
-
-            // Stay on Card 2
-            .to({}, { duration: 1.5 })
-
-            // --- Transition 2: Card 2 (Out) -> Card 3 (Rising In) ---
-            .to(card2Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })
             .to(card3, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, "-=0.8")
             .to(card3Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.7")
 
@@ -197,7 +187,7 @@ document.addEventListener('DOMContentLoaded', () => {
     // 6. Section Content Reveal (hl-reveal elements)
     // ─────────────────────────────────────────────
     // Pre-hide all reveal elements across service sections
-    const allRevealEls = document.querySelectorAll('.hl-reveal:not(.mission-text .hl-reveal):not(.mission-text)');
+    const allRevealEls = document.querySelectorAll('.hl-reveal');
     gsap.set(allRevealEls, { opacity: 0, y: 40 });
 
     // Track which sections have already animated
@@ -208,8 +198,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (!sectionEl || revealedSections.has(index)) return;
 
         // Custom reveal for stacked cards to ensure they animate when they come into view
-        // Exclude mission-text as it has its own scroll-driven scale animation
-        const revealEls = sectionEl.querySelectorAll('.hl-reveal:not(.mission-text)');
+        const revealEls = sectionEl.querySelectorAll('.hl-reveal');
         if (revealEls.length > 0) {
             revealedSections.add(index);
             gsap.to(revealEls, {
@@ -253,52 +242,73 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     // ─────────────────────────────────────────────
-    // Mission Section: Zoom-out text effect on scroll
+    // Keyword Transition Section
     // ─────────────────────────────────────────────
-    const missionSection = document.querySelector('.mission-section');
-    const missionText = document.querySelector('.mission-text');
-    const focusLetter = document.querySelector('.mission-focus-letter');
-    if (missionSection && missionText && focusLetter) {
-        const startScale = 50;
+    const keywordSection = document.querySelector('.keyword-section');
+    const words = document.querySelectorAll('.keyword-word');
+    const dotExpand = document.querySelector('.dot-expand');
+    const keywordDot = document.querySelector('.keyword-dot');
+    if (keywordSection && words.length === 3 && dotExpand && keywordDot) {
+        // First word hidden below; others hidden with 0 width
+        gsap.set(words[0], { opacity: 0, y: 60 });
+        gsap.set([words[1], words[2]], { opacity: 0, width: 0, overflow: 'hidden' });
 
-        // Calculate transform-origin so the 's' letter is the zoom center.
-        // The ratio (letterCenter - textLeft) / textWidth is invariant under
-        // uniform scaling, so this works at ANY current scale without resetting it.
-        const calcOrigin = () => {
-            const tr = missionText.getBoundingClientRect();
-            const lr = focusLetter.getBoundingClientRect();
-            if (tr.width === 0 || tr.height === 0) return null;
-            const ox = ((lr.left + lr.width / 2) - tr.left) / tr.width * 100;
-            const oy = ((lr.top + lr.height / 2) - tr.top) / tr.height * 100;
-            return `${ox}% ${oy}%`;
+        // Measure dot position with all words visible
+        const clipProxy = { r: 0 };
+        let dotCx = 50, dotCy = 50;
+
+        const measureDot = () => {
+            // Temporarily show all words at full size
+            gsap.set(words, { opacity: 1, width: 'auto', overflow: 'visible' });
+            const dotRect = keywordDot.getBoundingClientRect();
+            const sectionRect = keywordSection.getBoundingClientRect();
+            dotCx = ((dotRect.left + dotRect.width / 2 - sectionRect.left) / sectionRect.width * 100);
+            dotCy = ((dotRect.bottom - dotRect.height * 0.3 - sectionRect.top) / sectionRect.height * 100);
+            // Reset to initial state
+            gsap.set(words[0], { opacity: 0, y: 60, width: 'auto', overflow: 'visible' });
+            gsap.set([words[1], words[2]], { opacity: 0, width: 0, overflow: 'hidden' });
+            gsap.set(dotExpand, { clipPath: `circle(0% at ${dotCx}% ${dotCy}%)` });
         };
 
-        // Measure BEFORE applying scale (text is at natural scale 1, cleanest measurement)
-        const initialOrigin = calcOrigin() || '50% 50%';
-        gsap.set(missionText, {
-            transformOrigin: initialOrigin,
-            scale: startScale,
-            opacity: 1,
-            y: 0
-        });
+        measureDot();
+
+        const kwTl = gsap.timeline();
+        kwTl
+            // Empty space for 2/3 of section entry
+            .to({}, { duration: 1.5 })
+            // First word rises up from below
+            .to(words[0], { opacity: 1, y: 0, duration: 0.8, ease: "power3.out" })
+            // Hold first word centered
+            .to({}, { duration: 0.5 })
+            // Second word expands in, pushing first word left
+            .to(words[1], { opacity: 1, width: 'auto', overflow: 'visible', duration: 1, ease: "power3.out" })
+            .to({}, { duration: 0.3 })
+            // Third word expands in
+            .to(words[2], { opacity: 1, width: 'auto', overflow: 'visible', duration: 1, ease: "power3.out" })
+            // Hold all words visible
+            .to({}, { duration: 0.3 })
+            // Expand circle from '.' position using proxy
+            .to(clipProxy, {
+                r: 150,
+                duration: 1.5,
+                ease: "power2.in",
+                onUpdate: () => {
+                    dotExpand.style.clipPath = `circle(${clipProxy.r}% at ${dotCx}% ${dotCy}%)`;
+                },
+            });
 
         ScrollTrigger.create({
-            trigger: missionSection,
+            trigger: keywordSection,
             start: "top top",
-            end: "+=300%",
+            end: "+=350%",
             scrub: 0.5,
             pin: true,
             pinSpacing: true,
-            invalidateOnRefresh: true,
-            animation: gsap.to(missionText, {
-                scale: 1,
-                ease: "none",
-            }),
-            onRefresh: () => {
-                const origin = calcOrigin();
-                if (origin) gsap.set(missionText, { transformOrigin: origin });
-            },
+            animation: kwTl,
+            onRefresh: measureDot,
         });
+
+        document.fonts.ready.then(measureDot);
     }
 
     // Header style change: only after hero section is fully scrolled past
@@ -309,6 +319,20 @@ document.addEventListener('DOMContentLoaded', () => {
             start: "bottom top",
             onEnter: () => updateHeader(1),
             onLeaveBack: () => updateHeader(0),
+        });
+    }
+
+    // Toggle header light-bg during keyword section (white background)
+    const headerEl = document.getElementById('header');
+    if (keywordSection) {
+        ScrollTrigger.create({
+            trigger: keywordSection,
+            start: "top top",
+            end: "+=350%",
+            onEnter: () => headerEl.classList.add('light-bg'),
+            onLeaveBack: () => headerEl.classList.remove('light-bg'),
+            onLeave: () => headerEl.classList.remove('light-bg'),
+            onEnterBack: () => headerEl.classList.add('light-bg'),
         });
     }
 

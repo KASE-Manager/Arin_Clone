@@ -112,8 +112,9 @@ li {
 }
 
 #header.scrolled {
-    background: rgba(255, 255, 255, 0.95);
-    backdrop-filter: blur(10px);
+    background: transparent;
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-bottom: none;
 }
 
@@ -163,6 +164,21 @@ li {
 
 #header.scrolled .desktop-nav a:hover {
     color: var(--color-text);
+}
+
+/* Light background mode */
+#header.light-bg .logo-img {
+    filter: none !important;
+    transition: filter 0.3s ease;
+}
+
+#header.light-bg .desktop-nav a {
+    color: #212552 !important;
+    transition: color 0.3s ease;
+}
+
+#header.light-bg .desktop-nav a:hover {
+    color: #000 !important;
 }
 
 .menu-trigger {
@@ -357,50 +373,44 @@ li {
     word-break: keep-all;
 }
 
-/* --- Brand Mission Section [NEW] --- */
-.mission-section {
+/* --- Keyword Transition Section --- */
+.keyword-section {
     height: 100vh;
     display: flex;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    padding: 0 10%;
-    background: var(--color-bg);
-    overflow: clip;
+    background: #ffffff;
+    overflow: hidden;
 }
 
-.mission-text {
-    max-width: 900px;
-    width: 100%;
-    will-change: transform;
+.keyword-display {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
 }
 
-.mission-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--color-text-dim);
-    margin-bottom: 40px;
-    opacity: 0.6;
-}
-
-.mission-title {
+.keyword-word {
     font-family: var(--font-gmarket-bold);
-    font-size: clamp(32px, 4.5vw, 64px);
-    line-height: 1.25;
-    color: var(--color-text);
-    word-break: keep-all;
+    font-size: clamp(40px, 6vw, 90px);
+    color: #101010;
+    white-space: nowrap;
+    will-change: transform, opacity;
 }
 
-.mission-title span {
-    color: rgba(255, 255, 255, 0.3); /* Subtle contrast for mission text */
-}
-
-.mission-focus-letter {
+.keyword-dot {
     display: inline-block;
-    color: rgba(255, 255, 255, 0.3);
+}
+
+.dot-expand {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    background: #101010;
+    clip-path: circle(0% at 50% 50%);
+    z-index: 10;
+    pointer-events: none;
 }
 
 /* --- Services Stack (Toss Style Pinned Story) --- */
@@ -408,7 +418,7 @@ li {
     position: relative;
     width: 100%;
     /* Height will be handled by GSAP Pinning duration */
-    background-color: var(--color-bg);
+    background-color: #101010;
 }
 
 
@@ -453,7 +463,7 @@ li {
 
 .service-grid {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: flex-end;
     width: 92%;
     max-width: 1300px;
@@ -461,7 +471,7 @@ li {
     margin: 0 auto;
     padding: 4rem 5rem;
     border-radius: 40px;
-    box-shadow: 0 40px 100px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     position: relative;
     overflow: hidden;
     box-sizing: border-box;
@@ -548,57 +558,111 @@ li {
 
 /* --- Partners Section --- */
 .partners-section {
-    padding: 100px 0;
-    background: #ffffff;
+    padding: 120px 6%;
+    background: #101010;
     text-align: center;
-    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 50px;
 }
 
-.partners-label {
-    display: block;
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 4px;
-    text-transform: uppercase;
-    color: var(--color-text-dim);
-    opacity: 0.6;
-    margin-bottom: 60px;
+.partners-badge {
+    display: inline-block;
+    padding: 8px 24px;
+    border: 1px solid rgba(255, 255, 255, 0.25);
+    border-radius: 50px;
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.partners-heading {
+    font-family: var(--font-gmarket-bold);
+    font-size: clamp(28px, 3.5vw, 48px);
+    color: #fff;
+    font-weight: 400;
+    line-height: 1.3;
 }
 
 .partners-track-wrapper {
+    width: 100%;
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
-    mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+    -webkit-mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    mask-image: linear-gradient(to right, transparent, black 8%, black 92%, transparent);
+    margin-top: 20px;
 }
 
 .partners-track {
     display: flex;
     align-items: center;
     width: max-content;
-    animation: partnerScroll 20s linear infinite;
+    animation: partnerScroll 25s linear infinite;
 }
 
 .partners-track img {
-    height: 50px;
+    height: 40px;
     width: auto;
     flex-shrink: 0;
     margin-right: 80px;
+    opacity: 0.6;
+    filter: grayscale(1) brightness(3);
+    transition: all 0.3s ease;
+}
+
+.partners-track:hover {
+    animation-play-state: paused;
+}
+
+.partners-track img:hover {
+    opacity: 1;
+    filter: none;
+}
+
+.partners-track img.logo-raonstay {
+    height: 52px;
 }
 
 .partners-track img.logo-yesfuture {
-    height: 143px;
+    height: 118px;
+    filter: grayscale(1) brightness(0) invert(1) brightness(0.55);
+    opacity: 1;
+}
+
+.partners-track img.logo-yesfuture:hover {
+    filter: none;
+    opacity: 1;
 }
 
 .partners-track img.logo-uplus {
-    height: 72px;
+    height: 50px;
+    filter: grayscale(1) brightness(0.55);
+    opacity: 1;
+}
+
+.partners-track img.logo-uplus:hover {
+    filter: none;
+    opacity: 1;
 }
 
 .partners-track img.logo-tmobile {
-    height: 72px;
+    height: 50px;
+}
+
+.partners-track img.logo-freet {
+    height: 20px;
 }
 
 .partners-track img.logo-enkorwithus {
-    height: 75px;
+    height: 88px;
+    filter: grayscale(1) brightness(0) invert(1) brightness(0.55);
+    opacity: 1;
+}
+
+.partners-track img.logo-enkorwithus:hover {
+    filter: none;
+    opacity: 1;
 }
 
 @keyframes partnerScroll {
@@ -943,20 +1007,18 @@ li {
 
 
 #footer {
-    padding: 60px 5.28% 40px; /* Increased from 1.76% (1.76 * 3 = 5.28) */
+    padding: 60px 5.28% 40px;
     position: relative;
     z-index: 2;
-    background: rgba(255, 255, 255, 0.9);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    background: #101010;
+    border-top: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 #header.scrolled {
-    background: rgba(23, 23, 27, 0.85); /* Changed from 255 to match #17171B */
+    background: transparent;
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
-    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    box-shadow: none;
 }
 
 .logo a {
