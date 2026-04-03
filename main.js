@@ -121,7 +121,7 @@ document.addEventListener('DOMContentLoaded', () => {
             scrollTrigger: {
                 trigger: stackWrapper,
                 start: "top top",
-                end: "+=300%", // Stay pinned for 3x viewport height
+                end: "+=450%", // Stay pinned for 4.5x viewport height
                 pin: true,
                 scrub: 1,
                 markers: false
@@ -132,19 +132,24 @@ document.addEventListener('DOMContentLoaded', () => {
         gsap.set(card1, { opacity: 1, pointerEvents: "auto" });
         gsap.set([card2, card3], { opacity: 0, pointerEvents: "none" });
 
-        // Hide Card 2 & 3 grids, Card 1 starts visible
-        gsap.set(card1Grid, { y: 0, opacity: 1, scale: 1, filter: "none" });
-        gsap.set([card2Grid, card3Grid], { y: 100, opacity: 0 });
+        // All cards start hidden
+        gsap.set([card1Grid, card2Grid, card3Grid], { y: 100, opacity: 0 });
 
         // 2. Timeline Sequence
         masterTl
+            // --- Card 1 Rising In ---
+            .to(card1Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0)
+
+            // Stay on Card 1
+            .to({}, { duration: 1 })
+
             // --- Transition 1: Card 1 (Out) -> Card 2 (Rising In) ---
-            .to(card1Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 }, 0)
-            .to(card2, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, 0.2)
-            .to(card2Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, 0.3)
+            .to(card1Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })
+            .to(card2, { opacity: 1, pointerEvents: "auto", duration: 0.1 }, "-=0.8")
+            .to(card2Grid, { y: 0, opacity: 1, duration: 1, ease: "power2.out" }, "-=0.7")
 
             // Stay on Card 2
-            .to({}, { duration: 0.5 })
+            .to({}, { duration: 1.5 })
 
             // --- Transition 2: Card 2 (Out) -> Card 3 (Rising In) ---
             .to(card2Grid, { opacity: 0, scale: 0.8, filter: "blur(4px)", duration: 1 })

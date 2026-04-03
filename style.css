@@ -446,6 +446,11 @@ li {
 #section-doko { z-index: 20; }
 #section-influencer { z-index: 30; }
 
+#section-influencer .service-accent-label,
+#section-influencer .highlight-desc {
+    color: #5A4446;
+}
+
 .service-grid {
     display: flex;
     align-items: flex-end;

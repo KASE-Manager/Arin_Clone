@@ -34,164 +34,167 @@
 
 <body>
 
-        <div id="app">
-            <!-- Header -->
-            <header id="header">
-                <div class="header-inner">
-                    <h1 class="logo">
-                        <a href="/"><img src="YOURKASE LOGO.svg" alt="YOURKASE" class="logo-img"></a>
-                    </h1>
-                    <nav class="desktop-nav">
-                        <ul>
-                            <li><a href="#" data-section="1" class="nav-link">SERVICE</a></li>
-                            <li><a href="#" data-section="4" class="nav-link">ABOUT</a></li>
-                        </ul>
-                    </nav>
+    <div id="app">
+        <!-- Header -->
+        <header id="header">
+            <div class="header-inner">
+                <h1 class="logo">
+                    <a href="/"><img src="YOURKASE LOGO.svg" alt="YOURKASE" class="logo-img"></a>
+                </h1>
+                <nav class="desktop-nav">
+                    <ul>
+                        <li><a href="#" data-section="1" class="nav-link">SERVICE</a></li>
+                        <li><a href="#" data-section="4" class="nav-link">ABOUT</a></li>
+                    </ul>
+                </nav>
+            </div>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Hero Slider -->
+            <section class="hero">
+                <div class="swiper hero-swiper">
+                    <div class="swiper-wrapper">
+                        <!-- Slide 1 -->
+                        <div class="swiper-slide">
+                            <img src="hero_slide_1.png" alt="YOURKASE" class="hero-image">
+                            <div class="hero-content hl-reveal">
+                                <h2 class="hero-title">We design how people<br>experience Korea.</h2>
+                                <p class="hero-subtitle">한국을 방문하고 정착하는 외국인의 시작부터 경험까지 —<br>유어케이스는 한국 생활의 모든 접점을
+                                    설계합니다.</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </header>
+            </section>
 
-            <!-- Main Content -->
-            <main>
-                <!-- Hero Slider -->
-                <section class="hero">
-                    <div class="swiper hero-swiper">
-                        <div class="swiper-wrapper">
-                            <!-- Slide 1 -->
-                            <div class="swiper-slide">
-                                <img src="hero_slide_1.png" alt="YOURKASE" class="hero-image">
-                                <div class="hero-content hl-reveal">
-                                    <h2 class="hero-title">We design how people<br>experience Korea.</h2>
-                                    <p class="hero-subtitle">한국을 방문하고 정착하는 외국인의 시작부터 경험까지 —<br>유어케이스는 한국 생활의 모든 접점을
-                                        설계합니다.</p>
-                                </div>
+            <!-- Brand Mission Section [NEW] -->
+            <section id="section-mission" class="mission-section hl-reveal-section">
+                <div class="mission-text hl-reveal">
+                    <span class="mission-label">Our Mission</span>
+                    <h2 class="mission-title">
+                        Beyond just <span><span class="mission-focus-letter">s</span>taying</span>,<br>
+                        We make you <span>belong</span> in Korea.
+                    </h2>
+                </div>
+            </section>
+
+            <!-- Services Stack (Toss Style) [NEW] -->
+            <section class="services-stack-wrapper">
+                <div class="services-pinned-container">
+                    <!-- Card 1: Kase Station -->
+                    <div id="section-kase" class="service-card" data-index="1">
+                        <a href="kase-station.html" class="service-grid service-grid-bg"
+                            style="background-image: url('KaseStation_Thumbnail.png');">
+                            <div class="service-content">
+                                <h3 class="service-title"><img src="KaseStationLOGO_white.svg" alt="Kase Station"
+                                        class="service-title-logo"></h3>
+                                <p class="highlight-desc">
+                                    외국인 전용 글로벌 모바일 라운지.<br>
+                                    한국 도착 첫 순간부터 편리한 정착을 돕는<br>
+                                    유어케이스의 오프라인 거점입니다.
+                                </p>
                             </div>
+                        </a>
+                    </div>
+
+                    <!-- Card 2: DOKO -->
+                    <div id="section-doko" class="service-card" data-index="2">
+                        <a href="#" class="service-grid service-grid-bg"
+                            style="background-image: url('doko_hero.png');">
+                            <div class="service-content">
+                                <h3 class="service-title"><img src="MAIN LOGO.svg" alt="DOKO"
+                                        class="service-title-logo"></h3>
+                                <p class="highlight-desc">
+                                    방한 일본인을 위한 로컬 가이드 테크니션.<br>
+                                    다양한 라이프스타일 접점에서 매력적인<br>
+                                    로컬 콘텐츠를 창조하고 연결합니다.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+
+                    <!-- Card 3: Influencer Hub -->
+                    <div id="section-influencer" class="service-card" data-index="3">
+                        <a href="#" class="service-grid service-grid-bg"
+                            style="background-image: url('InfluencerMarketing.png');">
+                            <div class="service-content">
+                                <h3 class="service-title"><img src="BloomJLogo.svg" alt="Influencer Hub"
+                                        class="service-title-logo"></h3>
+                                <p class="highlight-desc">
+                                    글로벌 크리에이터와 브랜드를 연결하여<br>
+                                    전 세계에 진정성 있는 가치를 전달합니다.<br>
+                                    유어케이스의 인플루언서 네트워크입니다.
+                                </p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Partners Section -->
+            <section id="section-values" class="partners-section hl-reveal-section">
+                <span class="partners-label">Our Partners</span>
+                <div class="partners-track-wrapper">
+                    <div class="partners-track">
+                        <img src="LOGO/KT.png" alt="KT">
+                        <img src="LOGO/U+.png" alt="U+" class="logo-uplus">
+                        <img src="LOGO/T.png" alt="T" class="logo-tmobile">
+                        <img src="LOGO/CNTTECH.png" alt="CNTTECH">
+                        <img src="LOGO/Freet.png" alt="Freet">
+                        <img src="LOGO/RAON STAY.png" alt="RAON STAY">
+                        <img src="LOGO/Yesfuture.png" alt="Yesfuture" class="logo-yesfuture">
+                        <img src="LOGO/enkorwithus.png" alt="enkorwithus" class="logo-enkorwithus">
+                        <!-- duplicate for seamless loop -->
+                        <img src="LOGO/KT.png" alt="KT">
+                        <img src="LOGO/U+.png" alt="U+" class="logo-uplus">
+                        <img src="LOGO/T.png" alt="T" class="logo-tmobile">
+                        <img src="LOGO/CNTTECH.png" alt="CNTTECH">
+                        <img src="LOGO/Freet.png" alt="Freet">
+                        <img src="LOGO/RAON STAY.png" alt="RAON STAY">
+                        <img src="LOGO/Yesfuture.png" alt="Yesfuture" class="logo-yesfuture">
+                        <img src="LOGO/enkorwithus.png" alt="enkorwithus" class="logo-enkorwithus">
+                    </div>
+                </div>
+            </section>
+
+            <footer id="footer">
+                <div class="footer-main">
+                    <div class="footer-logo" style="opacity: 0.8;">
+                        <img src="YOURKASE LOGO.svg" alt="YOURKASE" class="footer-logo-img"
+                            style="filter: brightness(0) invert(1);">
+                    </div>
+                    <div class="footer-content">
+                        <h4 class="company-name">(주)유어케이스</h4>
+                        <div class="footer-info-row">
+                            <span>서울시 서초구 서초대로 398 BNK빌딩 735호</span>
+                            <span class="sep">|</span>
+                            <span>대표자: 전은희</span>
+                        </div>
+                        <div class="footer-info-row">
+                            <span>사업자등록번호: 255-88-03207</span>
+                            <span class="sep">|</span>
+                            <span>전화번호: 010-2371-9170</span>
+                        </div>
+                        <div class="footer-info-row">
+                            <span>이메일: ruby@yourkase.com</span>
+                        </div>
+                        <div class="footer-legal-row">
+                            <span class="copyright">&copy; 2026 YOURKASE. All Rights Reserved.</span>
+                            <a href="#">Privacy Policy</a>
+                            <a href="#">Terms of Service</a>
                         </div>
                     </div>
-                </section>
+                </div>
+            </footer>
 
-                <!-- Brand Mission Section [NEW] -->
-                <section id="section-mission" class="mission-section hl-reveal-section">
-                    <div class="mission-text hl-reveal">
-                        <span class="mission-label">Our Mission</span>
-                        <h2 class="mission-title">
-                            Beyond just <span><span class="mission-focus-letter">s</span>taying</span>,<br>
-                            We make you <span>belong</span> in Korea.
-                        </h2>
-                    </div>
-                </section>
+        </main>
 
-                <!-- Services Stack (Toss Style) [NEW] -->
-                <section class="services-stack-wrapper">
-                    <div class="services-pinned-container">
-                        <!-- Card 1: Kase Station -->
-                        <div id="section-kase" class="service-card" data-index="1">
-                            <a href="kase-station.html" class="service-grid service-grid-bg" style="background-image: url('KaseStation_Thumbnail.png');">
-                                <div class="service-content">
-                                    <span class="service-accent-label">Offline Lounge</span>
-                                    <h3 class="service-title"><img src="KaseStationLOGO_white.svg" alt="Kase Station" class="service-title-logo"></h3>
-                                    <p class="highlight-desc">
-                                        외국인 전용 글로벌 모바일 라운지.<br>
-                                        한국 도착 첫 순간부터 편리한 정착을 돕는<br>
-                                        유어케이스의 오프라인 거점입니다.
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
+    </div>
 
-                        <!-- Card 2: DOKO -->
-                        <div id="section-doko" class="service-card" data-index="2">
-                            <a href="#" class="service-grid service-grid-bg" style="background-image: url('doko_hero.png');">
-                                <div class="service-content">
-                                    <span class="service-accent-label">Local Content Platform</span>
-                                    <h3 class="service-title"><img src="MAIN LOGO.svg" alt="DOKO" class="service-title-logo"></h3>
-                                    <p class="highlight-desc">
-                                        방한 일본인을 위한 로컬 가이드 테크니션.<br>
-                                        다양한 라이프스타일 접점에서 매력적인<br>
-                                        로컬 콘텐츠를 창조하고 연결합니다.
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-
-                        <!-- Card 3: Influencer Hub -->
-                        <div id="section-influencer" class="service-card" data-index="3">
-                            <a href="#" class="service-grid service-grid-bg" style="background-image: url('InfluencerMarketing.png');">
-                                <div class="service-content">
-                                    <span class="service-accent-label">Global Creator Connection</span>
-                                    <h3 class="service-title">Influencer Hub</h3>
-                                    <p class="highlight-desc">
-                                        글로벌 크리에이터와 브랜드를 연결하여<br>
-                                        전 세계에 진정성 있는 가치를 전달합니다.<br>
-                                        유어케이스의 인플루언서 네트워크입니다.
-                                    </p>
-                                </div>
-                            </a>
-                        </div>
-                    </div>
-                </section>
-
-                <!-- Partners Section -->
-                <section id="section-values" class="partners-section hl-reveal-section">
-                    <span class="partners-label">Our Partners</span>
-                    <div class="partners-track-wrapper">
-                        <div class="partners-track">
-                            <img src="LOGO/KT.png" alt="KT">
-                            <img src="LOGO/U+.png" alt="U+" class="logo-uplus">
-                            <img src="LOGO/T.png" alt="T" class="logo-tmobile">
-                            <img src="LOGO/CNTTECH.png" alt="CNTTECH">
-                            <img src="LOGO/Freet.png" alt="Freet">
-                            <img src="LOGO/RAON STAY.png" alt="RAON STAY">
-                            <img src="LOGO/Yesfuture.png" alt="Yesfuture" class="logo-yesfuture">
-                            <img src="LOGO/enkorwithus.png" alt="enkorwithus" class="logo-enkorwithus">
-                            <!-- duplicate for seamless loop -->
-                            <img src="LOGO/KT.png" alt="KT">
-                            <img src="LOGO/U+.png" alt="U+" class="logo-uplus">
-                            <img src="LOGO/T.png" alt="T" class="logo-tmobile">
-                            <img src="LOGO/CNTTECH.png" alt="CNTTECH">
-                            <img src="LOGO/Freet.png" alt="Freet">
-                            <img src="LOGO/RAON STAY.png" alt="RAON STAY">
-                            <img src="LOGO/Yesfuture.png" alt="Yesfuture" class="logo-yesfuture">
-                            <img src="LOGO/enkorwithus.png" alt="enkorwithus" class="logo-enkorwithus">
-                        </div>
-                    </div>
-                </section>
-
-                <footer id="footer">
-                    <div class="footer-main">
-                        <div class="footer-logo" style="opacity: 0.8;">
-                            <img src="YOURKASE LOGO.svg" alt="YOURKASE" class="footer-logo-img"
-                                style="filter: brightness(0) invert(1);">
-                        </div>
-                        <div class="footer-content">
-                            <h4 class="company-name">(주)유어케이스</h4>
-                            <div class="footer-info-row">
-                                <span>서울시 서초구 서초대로 398 BNK빌딩 735호</span>
-                                <span class="sep">|</span>
-                                <span>대표자: 전은희</span>
-                            </div>
-                            <div class="footer-info-row">
-                                <span>사업자등록번호: 255-88-03207</span>
-                                <span class="sep">|</span>
-                                <span>전화번호: 010-2371-9170</span>
-                            </div>
-                            <div class="footer-info-row">
-                                <span>이메일: ruby@yourkase.com</span>
-                            </div>
-                            <div class="footer-legal-row">
-                                <span class="copyright">&copy; 2026 YOURKASE. All Rights Reserved.</span>
-                                <a href="#">Privacy Policy</a>
-                                <a href="#">Terms of Service</a>
-                            </div>
-                        </div>
-                    </div>
-                </footer>
-
-            </main>
-
-        </div>
-
-        <!-- Script -->
-        <script src="main.js"></script>
+    <!-- Script -->
+    <script src="main.js"></script>
 </body>
 
 </html>
